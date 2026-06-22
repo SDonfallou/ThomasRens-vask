@@ -1,5 +1,6 @@
   'use client'
 import { useState } from 'react'
+import { useEffect } from 'react'
 
 type TrackResult = {
   order_ref: string
@@ -14,6 +15,16 @@ export default function BestillingPage() {
     name: '', phone: '', email: '', address: '',
     service: 'Kjemisk rens', preferred_date: '', description: '',
   })
+  const [services, setServices] = useState<string[]>(['Kjemisk rens','Skjorteservice','Skreddertjeneste','Bunad','Interiør / soverom','Ekspress 24t (+50 kr)','Annet'])
+
+  useEffect(() => {
+    fetch('/api/services').then(r => r.json()).then(j => {
+      if (j.services && Array.isArray(j.services) && j.services.length) {
+        const opts = j.services.map((s: any) => s.title || s.number || '').filter(Boolean)
+        if (opts.length) setServices(opts)
+      }
+    }).catch(() => {})
+  }, [])
   const [submitting, setSubmitting] = useState(false)
   const [confirmed, setConfirmed] = useState<string | null>(null)
   const [bookingError, setBookingError] = useState<string | null>(null)
@@ -110,7 +121,7 @@ export default function BestillingPage() {
                 onChange={e => setForm(f => ({ ...f, service: e.target.value }))}
                 className="bg-white border border-[#E5E0D5] px-3 py-3 font-sans text-[13px] text-[#2C2C28] outline-none focus:border-[#8B7355]"
               >
-                {['Kjemisk rens','Skjorteservice','Skreddertjeneste','Bunad','Interiør / soverom','Ekspress 24t (+50 kr)','Annet'].map(s => (
+                {services.map(s => (
                   <option key={s}>{s}</option>
                 ))}
               </select>

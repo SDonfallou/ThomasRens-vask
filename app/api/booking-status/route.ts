@@ -2,8 +2,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { sendStatusChangeEmails } from '@/lib/resend'
 
+function unauthorized() {
+  return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+}
+
 export async function POST(req: NextRequest) {
   try {
+    const pw = req.headers.get('x-admin-password') || ''
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || ''
+    if (!ADMIN_PASSWORD || pw !== ADMIN_PASSWORD) return unauthorized()
+
     const body = await req.json()
     const { order_ref, status } = body
 
