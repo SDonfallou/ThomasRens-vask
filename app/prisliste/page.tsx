@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 
 const PRICES = [
   {
@@ -53,22 +53,22 @@ export default function PrislistePage() {
     <div className="py-16 px-10 max-w-[900px] mx-auto">
       <div className="text-center mb-14">
         <h1 className="text-[34px] font-normal mb-2">Prisliste</h1>
-        <p className="font-sans text-[13px] text-[#7A7468]">Prisene er veiledende. Ring oss på 22 71 78 70 for spesialtjenester.</p>
+        <p className="font-sans text-[13px] text-[#4B628A]">Prisene er veiledende. Ring oss på 22 71 78 70 for spesialtjenester.</p>
       </div>
 
       {PRICES.map(({ category, items }) => (
         <div key={category} className="mb-12">
-          <div className="font-sans text-[10px] tracking-[0.25em] uppercase text-[#8B7355] mb-5 pb-2 border-b border-[#E5E0D5]">
+          <div className="font-sans text-[10px] tracking-[0.25em] uppercase text-[var(--warm)] mb-5 pb-2 border-b border-[#D6E4FF]">
             {category}
           </div>
           <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
             {items.map(({ name, lines }) => (
-              <div key={name} className="bg-[#FAF8F3] p-5">
+              <div key={name} className="bg-[var(--cream-soft)] p-5">
                 <h4 className="text-[15px] font-normal mb-3">{name}</h4>
                 {lines.map(([service, price]) => (
                   <div key={service} className="flex justify-between py-1.5 border-b border-black/[0.06] last:border-b-0 font-sans text-[12px]">
-                    <span className="text-[#7A7468]">{service}</span>
-                    <span className="font-bold text-[#2C2C28]">{price}</span>
+                    <span className="text-[#4B628A]">{service}</span>
+                    <span className="font-bold text-[#0F2F66]">{price}</span>
                   </div>
                 ))}
               </div>
@@ -78,7 +78,7 @@ export default function PrislistePage() {
       ))}
 
       <div className="text-center mt-10">
-        <Link href="/bestilling" className="bg-[#C4A882] text-[#1A1A18] px-8 py-3 font-sans text-[11px] tracking-widest uppercase font-bold inline-block">
+        <Link href="/bestilling" className="bg-[var(--warm-light)] text-[var(--dark)] px-8 py-3 font-sans text-[11px] tracking-widest uppercase font-bold inline-block">
           Bestill nå
         </Link>
       </div>

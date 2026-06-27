@@ -1,17 +1,27 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 :root {
-  --cream: #FAF8F3;
-  --dark: #1A1A18;
-  --dark2: #22221F;
-  --warm: #8B7355;
-  --warm-light: #C4A882;
-  --accent: #5C6E50;
-  --border: #E5E0D5;
-  --text: #2C2C28;
-  --text-muted: #7A7468;
+  --cream: #F4F8FF;
+  --cream-soft: #FFFFFF;
+  --dark: #0B2A5B;
+  --dark2: #123E7A;
+  --warm: #2F6FD6;
+  --warm-light: #69A9FF;
+  --accent: #1F4EA3;
+  --border: #D6E4FF;
+  --text: #0F2F66;
+  --text-muted: #4B628A;
+}
+
+html {
+  background: var(--cream);
 }
 
 body {
   font-family: 'Georgia', serif;
+  background:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.10), transparent 28%),
+    var(--cream);
+  color: var(--text);
 }

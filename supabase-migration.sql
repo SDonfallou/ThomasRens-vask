@@ -28,3 +28,43 @@ alter table public.bookings enable row level security;
 --
 -- If this table already has an existing policy, drop it with:
 -- drop policy if exists "service role full access" on public.bookings;
+
+-- Loyalty customers (one profile per phone/email)
+create table if not exists public.loyalty_customers (
+  id               uuid primary key default gen_random_uuid(),
+  name             text not null,
+  phone            text,
+  email            text,
+  points_balance   integer not null default 0 check (points_balance >= 0),
+  lifetime_points  integer not null default 0 check (lifetime_points >= 0),
+  created_at       timestamptz not null default now(),
+  updated_at       timestamptz not null default now()
+);
+
+create unique index if not exists loyalty_customers_phone_unique
+  on public.loyalty_customers (phone)
+  where phone is not null and phone <> '';
+
+create unique index if not exists loyalty_customers_email_unique
+  on public.loyalty_customers (email)
+  where email is not null and email <> '';
+
+create index if not exists loyalty_customers_created_idx
+  on public.loyalty_customers (created_at desc);
+
+-- Points ledger for auditability
+create table if not exists public.loyalty_transactions (
+  id               uuid primary key default gen_random_uuid(),
+  customer_id      uuid not null references public.loyalty_customers(id) on delete cascade,
+  kind             text not null check (kind in ('earn', 'redeem', 'adjust')),
+  points           integer not null,
+  note             text,
+  order_ref        text,
+  created_at       timestamptz not null default now()
+);
+
+create index if not exists loyalty_transactions_customer_idx
+  on public.loyalty_transactions (customer_id, created_at desc);
+
+alter table public.loyalty_customers enable row level security;
+alter table public.loyalty_transactions enable row level security;

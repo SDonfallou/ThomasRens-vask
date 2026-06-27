@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="no">
-      <body className="bg-white text-[#2C2C28] overflow-x-hidden">
+      <body className="text-[var(--text)] overflow-x-hidden bg-[var(--cream)]">
         <Navbar />
         <ToastProvider>
           <main>{children}</main>
